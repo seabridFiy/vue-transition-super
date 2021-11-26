@@ -1,0 +1,29 @@
+{
+  "name": "vue-transition-super",
+  "version": "1.0.0",
+  "description": "vue app 切换页面过渡动画插件",
+  "main": "index.js",
+  "scripts": {
+  },
+  "keywords": [
+    "h5",
+    "pc",
+    "vue",
+    "transition",
+    "切换页面过渡动画"
+  ],
+  "author": "coder_chen",
+  "license": "ISC",
+
+  "dependencies": {
+    "animate.css": "^4.1.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seabridFiy/vue-transition-super.git"
+  },
+  "bugs": {
+    "url": "https://github.com/seabridFiy/vue-transition-super/issues"
+  },
+  "homepage": "https://github.com/seabridFiy/vue-transition-super#readme"
+}
