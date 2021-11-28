@@ -6,7 +6,7 @@
 // main.js
 import Vue from 'vue'
 import TransitionSuper from 'vue-transition-super'
-Vue.use(VueTransitionSuper)
+Vue.use(TransitionSuper)
 
 // app.vue
 <transition-super ref="transitionSuper">
