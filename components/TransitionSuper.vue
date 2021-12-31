@@ -1,9 +1,39 @@
 <script>
-import props from "../utils/transitionSuperProps";
-// import { getWrapperVue } from "../utils/wrapperVue";
+import { getData } from "../utils/store";
 export default {
   name: "TransitionSuper",
-  props,
+  abstract: true,
+  props: {
+    tag: {
+      // 标签名
+      type: String,
+      default: "transition",
+      validator: (t) => {
+        return ["transition", "transition-group"].includes(t);
+      },
+    },
+    forwardeEnterActiveClass: {
+      // 路由前进时进场动画class名称
+      type: [String, Array],
+    },
+    forwardeLeaveActiveClass: {
+      // 路由前进时离场动画class名称
+      type: [String, Array],
+    },
+    backEnterActiveClass: {
+      // 路由后退时进场动画class名称
+      type: [String, Array],
+    },
+    backLeaveActiveClass: {
+      // 路由后退时离场动画class名称
+      type: [String, Array],
+    },
+    notUseAnimate: {
+      // 不使用animate.css动画效果
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
       direction: {
@@ -17,13 +47,34 @@ export default {
     };
   },
   computed: {
+    activeClassConf() {
+      const option = getData("option") || {};
+      const {
+        forwardeEnterActiveClass = this.forwardeEnterActiveClass ||
+          "animate__bounceInLeft",
+        forwardeLeaveActiveClass = this.forwardeLeaveActiveClass ||
+          "animate__bounceOutRight",
+        backEnterActiveClass = this.backEnterActiveClass ||
+          "animate__bounceInRight",
+        backLeaveActiveClass = this.backLeaveActiveClass ||
+          "animate__bounceOutLeft",
+        notUseAnimate = this.notUseAnimate || false,
+      } = option;
+      return {
+        forwardeEnterActiveClass,
+        forwardeLeaveActiveClass,
+        backEnterActiveClass,
+        backLeaveActiveClass,
+        notUseAnimate
+      };
+    },
     animateNames() {
       const {
         forwardeEnterActiveClass,
         forwardeLeaveActiveClass,
         backEnterActiveClass,
         backLeaveActiveClass,
-      } = this;
+      } = this.activeClassConf;
       return this.direction.flag === "forward"
         ? [forwardeEnterActiveClass, forwardeLeaveActiveClass]
         : [backEnterActiveClass, backLeaveActiveClass];
@@ -39,7 +90,8 @@ export default {
   },
   watch: {
     $route() {
-      if (this.oldDirection.timer === this.direction.timer) {
+      const flag = this.oldDirection.timer === this.direction.timer
+      if (flag) {
         this.direction.flag = "forward";
       } else {
         this.oldDirection = this.direction;
